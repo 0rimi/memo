@@ -29,4 +29,20 @@
 		)
 	</insert>	
 	
+	<select id="selectPostsByUserId" parameterType="int" resultType="com.memo.post.model.Post">
+		SELECT
+			`id`
+			,`userId`
+			,`subject`
+			,`content`
+			,`imgPath`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`post`
+		WHERE
+			`userId` = #{userId}
+		ORDER BY `id` DESC
+	</select>
+	
 </mapper>

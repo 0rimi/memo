@@ -6,6 +6,8 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import com.memo.post.model.Post;
+
 @Repository
 public interface PostDAO {
 	
@@ -17,5 +19,8 @@ public interface PostDAO {
 			@Param("content") String content,
 			@Param("imgPath") String imgPath
 			);
+	
+	//글 목록 불러오기
+	public List<Post> selectPostsByUserId(int userId);
 	
 }
