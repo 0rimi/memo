@@ -36,6 +36,11 @@ public class PostBO {
 		return postDAO.selectPostsByUserId(userId);
 	}
 	
+	// 수정할 글 가져오기
+	public Post getPostByPostIdUserId(int postId, int userId) {
+		return postDAO.selectPostByPostIdUserId(postId,userId);
+	}
+	
 	
 
 }

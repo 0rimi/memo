@@ -23,4 +23,9 @@ public interface PostDAO {
 	//글 목록 불러오기
 	public List<Post> selectPostsByUserId(int userId);
 	
+	//수정할 글 불러오기
+	public Post selectPostByPostIdUserId(
+			@Param("postId") int postId,
+			@Param("userId") int userId
+			);
 }

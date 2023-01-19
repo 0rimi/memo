@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -57,20 +55,5 @@ public class PostRestController {
 		return result;
 	}
 	
-	@GetMapping("/post_detail_view")
-	public String postDetailView(
-			@RequestParam("postId") int postId,
-			Model model, HttpSession session) {
-		
-		Integer userId = (Integer)session.getAttribute("userId");
-		if(userId == null) {
-			return "redirect:/user/sign_in_view";
-		}
-		
-		//DB select by userId, postId
-		model.addAttribute("viewName", "post/postDetail");
-		
-		return "template/layout";
-	}
 
 }

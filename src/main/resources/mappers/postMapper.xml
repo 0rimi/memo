@@ -45,4 +45,21 @@
 		ORDER BY `id` DESC
 	</select>
 	
+	<!-- 수정할 글 가져오기 -->
+	<select id="selectPostByPostIdUserId" parameterType="map" resultType="com.memo.post.model.Post">
+		SELECT
+			`id`
+			,`userId`
+			,`subject`
+			,`content`
+			,`imgPath`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`post`
+		WHERE
+			`userId` = #{userId}
+			AND `id` = #{postId}
+	</select>
+	
 </mapper>
