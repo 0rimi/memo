@@ -23,7 +23,7 @@
 		<div class="d-flex justify-content-between">
 			<button type="button" id="postDeleteBtn" class="btn btn-danger">삭제</button>
 			<div>
-				<a href="/post/post_list_view" type="button" id="postListBtn" class="btn btn-secondary">목록으로</a>
+				<a href="/post/post_list_view" type="button" id="postListBtn" class="btn btn-dark">목록으로</a>
 				<button type="button" id="postUpdateBtn" class="btn btn-primary" data-post-id="${post.id}">수정하기</button>
 			</div>
 		</div>
