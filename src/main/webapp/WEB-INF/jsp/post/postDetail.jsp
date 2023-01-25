@@ -21,10 +21,10 @@
 		
 
 		<div class="d-flex justify-content-between">
-			<button type="button" id="postDeleteBtn" class="btn btn-dark">삭제</button>
+			<button type="button" id="postDeleteBtn" class="btn btn-danger">삭제</button>
 			<div>
 				<a href="/post/post_list_view" type="button" id="postListBtn" class="btn btn-secondary">목록으로</a>
-				<button type="button" id="postUpdateBtn" class="btn btn-primary">수정하기</button>
+				<button type="button" id="postUpdateBtn" class="btn btn-primary" data-post-id="${post.id}">수정하기</button>
 			</div>
 		</div>
 	</div>
@@ -33,83 +33,61 @@
 <!-- script -->
 <script>
 	$(document).ready(function() {
-
-		// 목록버튼 클릭
-		$('#postListBtn').on('click', function() {
-			location.href = "/post/post_list_view"
-		});
-
-		// 모두 지우기 버튼 클릭
-		$('#clearBtn').on('click', function() {
-			$('#subject').val("");
-			$('#content').val("");
-		});
-
-		// 글 저장 버튼 클릭
-		$('#postCreateBtn').on('click', function() {
+		//////////수정버튼/////////////
+		$('#postUpdateBtn').on('click',function(){
 			let subject = $('#subject').val().trim();
-			let content = $('#content').val();
-
-			if (subject == '') {
-				alert("제목을 입력하세요");
+			if(subject == ''){
+				alert('제목을 입력하세요');
 				return;
 			}
-
+			let content = $('#content').val();
 			console.log(content);
-
+			
 			let file = $('#file').val();
-
-			// 파일이 업로드 된 경우에만 확장자 체크
+			console.log(file);	//C:\fakepath\Fmq0iFNacAANVUa.jpg
+			
+			//파일이 업로드 된 경우 확장자 체크
 			if (file != '') {
-				//alert(file.split(".").pop().toLowerCase());
 				let ext = file.split(".").pop().toLowerCase();
-				if ($.inArray(ext, [ 'jpg', 'jpeg', 'png', 'gif' ]) == -1) { //포함되지 않았다
-					alert("이미지 파일만 업로드 가능합니다");
-					$('#file').val(""); //파일을 비운다
+				if ($.inArray(ext, ['jpg', 'jpeg', 'png', 'gif']) == -1) {
+					alert("이미지 파일만 업로드 할 수 있습니다.");
+					$('#file').val(""); // 파일을 비운다.
 					return;
 				}
 			}
-
-			// 서버 - AJAX
-
-			// 이미지를 업로드 할 때는 form태그가 있어야 한다(자바스크립트에서 만듬)
-			// append로 넣는 값은 폼태그의 name으로 넣는 것과 같다
+			
+			//포스트번호
+			let postId = $(this).data('post-id');
+			console.log('포스트번호 : '+postId);
+			
 			let formData = new FormData();
-			formData.append("subject", subject);
-			formData.append("content", content);
-			formData.append("file", $('#file')[0].files[0]);//여러개를 올리는거면 배열로 ex)file[1]
-
-			// ajax 통신으로 formData에 있는 데이터 전송
+			formData.append('postId', postId);
+			formData.append('subject', subject);
+			formData.append('content', content);
+			formData.append('file',$('#file')[0].files[0]);
+			
+			//AJAX
 			$.ajax({
-				//request
-				type : "POST",
-				url : "/post/create",
-				data : formData //form객체를 통째로
-				,
-				enctype : "multipart/form-data" //file업로드를 위한 필수설정
-				,
-				processData : false //file업로드를 위한 필수설정
-				,
-				contentType : false //file업로드를 위한 필수설정
-
-				//response
-				,
-				success : function(data) {
-					if (data.code == 1) {
-						//성공
-						alert("메모가 저장되었습니다.");
-						location.href = "/post/post_list_view";
-					} else {
-						//실패
+				//rq
+				type:"PUT"
+				,url:"/post/update"
+				,data:formData
+				,enctype:"multipart/form-data"	//파일업로드를 위한 필수설정
+				,processData:false
+				,contentType:false
+				//rs
+				,success:function(data){
+					if(data.code == 1){
+						alert('수정되었습니다!');
+						location.reload();
+					}else{
 						alert(data.errorMessage);
 					}
-				},
-				error : function(e) {
-					console.log("메모 저장에 실패했습니다.")
+				}
+				,error:function(e){
+					alert('메모 수정에 실패했습니다.')
 				}
 			});
-
 		});
-
 	});
 </script>

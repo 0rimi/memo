@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -51,6 +52,29 @@ public class PostRestController {
 			result.put("code", 500);
 			result.put("errorMessage", "파일이 저장되지 않았습니다.");
 		}
+		
+		return result;
+	}
+	
+	@PutMapping("/update")
+	public Map<String,Object> update(
+			@RequestParam("postId") int postId,
+			@RequestParam("subject") String subject,
+			@RequestParam(value="content", required = false) String content,
+			@RequestParam(value="file",required = false) MultipartFile file,
+			HttpSession session
+			){
+		
+		int userId = (int)session.getAttribute("userId");
+		String userLoginId = (String)session.getAttribute("userLoginId");
+		
+		// db update
+		postBO.updatePost(userId, userLoginId, subject, postId, content, file);
+		
+		//result
+		Map<String,Object> result = new HashMap<>();
+		result.put("code", 1);
+		result.put("result", "성공");
 		
 		return result;
 	}

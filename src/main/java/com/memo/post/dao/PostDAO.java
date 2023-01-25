@@ -28,4 +28,12 @@ public interface PostDAO {
 			@Param("postId") int postId,
 			@Param("userId") int userId
 			);
+	
+	// 글 수정 : update
+	public void updatePostByPostIdUserId(
+			@Param("postId") int postId,
+			@Param("userId") int userId,
+			@Param("subject") String subject,
+			@Param("content") String content,
+			@Param("imgPath") String imgPath);
 }
