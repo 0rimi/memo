@@ -21,7 +21,7 @@
 		
 
 		<div class="d-flex justify-content-between">
-			<button type="button" id="postDeleteBtn" class="btn btn-danger">삭제</button>
+			<button type="button" id="postDeleteBtn" data-post-id="${post.id}" class="btn btn-danger">삭제</button>
 			<div>
 				<a href="/post/post_list_view" type="button" id="postListBtn" class="btn btn-dark">목록으로</a>
 				<button type="button" id="postUpdateBtn" class="btn btn-primary" data-post-id="${post.id}">수정하기</button>
@@ -89,5 +89,31 @@
 				}
 			});
 		});
+		////////////////////////////////////
+		
+		////////////////글삭제////////////////
+		$('#postDeleteBtn').on('click',function(){
+			let postId = $(this).data('post-id');
+			console.log('삭제포스트 :',postId);
+			
+			$.ajax({
+				//rq
+				type:"DELETE"
+				,url:"/post/delete"
+				,data:{"postId":postId}
+				//rs
+				,success:function(data){
+					if(data.result == '성공'){
+						alert('삭제되었습니다.');
+						location.href="/post/post_list_view";
+					}else{
+						alert(data.errorMessage);
+					}
+				},error:function(e){
+					console.log('메모삭제실패');
+				}
+			});
+		});
+		////////////////글삭제////////////////
 	});
 </script>

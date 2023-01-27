@@ -64,12 +64,28 @@ public class PostBO {
 		postDAO.updatePostByPostIdUserId(postId, userId, subject, content, imgPath);
 	}
 	
-	// 글목록 가져오기
+	//글삭제하기
+	public int deletePostByPostIdUserId(int postId, int userId) {
+		//기존글불러오기
+		Post post = getPostByPostIdUserId(postId, userId);
+		if(post == null) {
+			logger.warn("[update post] 수정할 메모가 존재하지 않습니다. postId :{}, userId:{}",postId,userId);
+			return 0;
+		}
+		//이미지 있는지 확인
+		if(post.getImgPath() != null) {
+			fileManagerService.deleteFile(post.getImgPath());
+		}
+		//삭제
+		return postDAO.deletePostByPostIdUserId(postId,userId);
+	}
+	
+	// 글 목록 가져오기
 	public List<Post> getPostsByUserId(int userId){
 		return postDAO.selectPostsByUserId(userId);
 	}
 	
-	// 수정할 글 가져오기
+	// 글 하나 가져오기
 	public Post getPostByPostIdUserId(int postId, int userId) {
 		return postDAO.selectPostByPostIdUserId(postId,userId);
 	}

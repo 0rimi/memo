@@ -36,4 +36,9 @@ public interface PostDAO {
 			@Param("subject") String subject,
 			@Param("content") String content,
 			@Param("imgPath") String imgPath);
+	
+	// 글 삭제 : delete
+	public int deletePostByPostIdUserId(
+			@Param("postId") int postId,
+			@Param("userId") int userId);
 }
