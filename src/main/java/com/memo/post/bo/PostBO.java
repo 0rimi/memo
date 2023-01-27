@@ -101,8 +101,6 @@ public class PostBO {
 			
 			List<Post> posts = postDAO.selectPostsByUserId(userId, direction, standardId, POST_MAX_SIZE);
 			Collections.reverse(posts);
-			System.out.println(posts);
-			
 			return posts;
 		}else if(nextId != null) {	//다음
 			direction = "next";

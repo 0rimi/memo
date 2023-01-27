@@ -50,11 +50,11 @@
 			AND `id` < #{standardId}
 			ORDER BY `id` DESC
 			]]>
+		</if>			
 		<if test="direction == 'prev'"> <!-- 이전페이지 누른상황 -->
 			<![CDATA[
 			AND `id` > #{standardId}
 			]]>
-		</if>
 		</if>
 		LIMIT ${limit}	<!-- ${} = ''없이 값만 -->
 	</select>
