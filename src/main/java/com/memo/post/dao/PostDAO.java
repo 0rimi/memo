@@ -21,7 +21,16 @@ public interface PostDAO {
 			);
 	
 	//글 목록 불러오기
-	public List<Post> selectPostsByUserId(int userId);
+	public List<Post> selectPostsByUserId(
+			@Param("userId") int userId, 
+			@Param("direction") String direction,
+			@Param("standardId") Integer standardId,
+			@Param("limit") int limit);
+	
+	//마지막페이지 id가져오기
+	public int selectPostIdByUserIdSort(
+			@Param("userId") int userId,
+			@Param("sort") String sort);
 	
 	//수정할 글 불러오기
 	public Post selectPostByPostIdUserId(
